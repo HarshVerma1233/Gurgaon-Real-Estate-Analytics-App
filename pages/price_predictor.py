@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-import os  # <-- Add this import
+import os 
 
 st.set_page_config(page_title = 'ViZ Demo')
 
@@ -17,8 +17,14 @@ pipeline_path = os.path.join(current_dir, 'pipeline.pkl')
 with open(df_path, 'rb') as file:
     df = pickle.load(file)
 
-with open(pipeline_path, 'rb') as file:
-    pipeline = pickle.load(file)
+try:
+    with open(pipeline_path, 'rb') as file:
+        pipeline = pickle.load(file)
+except Exception as e:
+    st.error("🚨 CRITICAL PICKLE ERROR REVEALED:")
+    st.code(str(e))
+    st.warning("Read the message above. It will name the exact library or class your pipeline is looking for (e.g., 'No module named category_encoders' or an Attribute Mismatch).")
+    st.stop()  # Stops execution right here so you can read it clearly
 
 
 st.header('Enter your Inputs - ')
