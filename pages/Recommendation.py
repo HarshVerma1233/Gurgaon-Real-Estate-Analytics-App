@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import os 
 
 st.set_page_config(
     page_title="Gurgaon Appartment Recommender",
@@ -8,11 +9,19 @@ st.set_page_config(
     layout="wide"
 )
 
-location_df = pickle.load(open(r'/home/harsh/Downloads/Populating_ubuntu/pages/location_df.pkl', 'rb'))
+current_dir = os.path.dirname(__file__)
 
-cosine_sim1 = pickle.load(open(r'/home/harsh/Downloads/Populating_ubuntu/pages/cosine_sim1.pkl', 'rb'))
-cosine_sim2 = pickle.load(open(r'/home/harsh/Downloads/Populating_ubuntu/pages/cosine_sim2.pkl', 'rb'))
-cosine_sim3 = pickle.load(open(r'/home/harsh/Downloads/Populating_ubuntu/pages/cosine_sim3.pkl', 'rb'))
+# 2. This dynamically links to the pickle file inside the same folder
+location_df_path = os.path.join(current_dir, 'location_df.pkl')
+cosine_sim1_path = os.path.join(current_dir, 'cosine_sim1.pkl')
+cosine_sim2_path = os.path.join(current_dir, 'cosine_sim2.pkl')
+cosine_sim3_path = os.path.join(current_dir, 'cosine_sim3.pkl')
+
+# 3. Load them using the dynamic paths (always use 'rb' mode for loading pickles!)
+location_df = pickle.load(open(location_df_path, 'rb'))
+cosine_sim1 = pickle.load(open(cosine_sim1_path, 'rb'))
+cosine_sim2 = pickle.load(open(cosine_sim2_path, 'rb'))
+cosine_sim3 = pickle.load(open(cosine_sim3_path, 'rb'))
 
 def recommend_properties_with_scores(property_name, top_n=247):
     

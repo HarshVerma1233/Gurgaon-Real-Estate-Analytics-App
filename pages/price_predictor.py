@@ -2,24 +2,22 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import KFold, cross_val_score
-from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler, OrdinalEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.svm import SVR
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-
-from sklearn.decomposition import PCA
+import os  # <-- Add this import
 
 st.set_page_config(page_title = 'ViZ Demo')
 
-with open ('/home/harsh/Downloads/Populating_ubuntu/pages/df.pkl','rb') as file:
+# 1. Dynamically get the directory path where this specific file lives
+current_dir = os.path.dirname(__file__)
+
+# 2. Build paths relative to this folder
+df_path = os.path.join(current_dir, 'df.pkl')
+pipeline_path = os.path.join(current_dir, 'pipeline.pkl')
+
+# 3. Load the data using the safe relative paths
+with open(df_path, 'rb') as file:
     df = pickle.load(file)
 
-with open ('/home/harsh/Downloads/Populating_ubuntu/pages/pipeline.pkl','rb') as file:
+with open(pipeline_path, 'rb') as file:
     pipeline = pickle.load(file)
 
 
